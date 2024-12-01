@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My App{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #333;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            padding: 1px 20px;
+        }
+        .navbar .centered {
+            display: flex;
+            flex: 1;
+            justify-content: center;
+            align-items: center;
+        }
+        .navbar a {
+            color: #f2f2f2;
+            text-align: center;
+            padding: 5px 20px;
+            text-decoration: none;
+            font-size: 15px;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .navbar .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+        .navbar .search-container input[type="text"],
+        .navbar .search-container select,
+        .navbar .search-container button {
+            padding: 5px;
+            font-size: 15px;
+            border: none;
+            border-radius: 5px;
+        }
+        .navbar .search-container input[type="text"] {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .navbar .search-container select {
+            margin-right: 10px;
+        }
+        .navbar .search-container button {
+            background-color: #333;
+            color: #f2f2f2;
+            cursor: pointer;
+        }
+        .navbar .search-container button:hover {
+            background-color: #555;
+        }
+        .footer {
+            background-color: #333;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 3px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .content {
+            padding: 20px;
+            margin-top: 30px;  /* Adjust this value to the height of the navbar */
+            margin-bottom: 70px;
+        }
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .card h2 {
+            margin-top: 0;
+        }
+        .form-container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 30px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-container .form-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .form-container .form-group label {
+            flex-basis: 100%;
+            margin-bottom: 10px;
+        }
+        .form-container .form-group textarea {
+            flex-basis: 100%;
+            padding: 10px;
+            font-size: 16px;
+            height: 150px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .form-container form button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #333;
+            color: #f2f2f2;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            align-self: center;
+        }
+        .form-container form button:hover {
+            background-color: #555;
+        }
+        .highlight { background-color: yellow; color: black; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="centered">
+            <a href="{% url 'add_document' %}">Add Questions</a>
+            <a href="{% url 'list_questions' %}">List of Questions</a>
+            <div class="search-container">
+                <form action="{% url 'search_documents' %}" method="get">
+                    <input style="width: 450px;" type="text" placeholder="Search..." name="q" value="{{ request.GET.q }}">
+                    <select name="algorithm">
+                        <option value="boolean" {% if request.GET.algorithm == "boolean" %}selected{% endif %}>Boolean</option>
+                        <option value="extended_boolean" {% if request.GET.algorithm == "extended_boolean" %}selected{% endif %}>Extended Boolean</option>
+                        <option value="vector" {% if request.GET.algorithm == "vector" %}selected{% endif %}>Vector</option>
+                    </select>
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 My App. All rights reserved.</p>
+    </div>
+</body>
+</html>
